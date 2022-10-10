@@ -117,4 +117,16 @@ class Game:
     
     def player_take(self):
         return self.get_score(self.player)<18
+        safe_rate=self.player_safe_probability()
+        return safe_rate>0.5
+    def player_safe_probability(self):
+        SIMULATION_COUNT=100
+        safe_count=0
+        for i in range(SIMULATION_COUNT):
+            game = self.get_simulation_copy()
+            game.hit(game.player)
+            if game.get_score(game.player)<=21:
+                safe_count+=1
+            pass
+        return safe_count/100
     pass

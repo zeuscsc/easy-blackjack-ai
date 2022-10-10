@@ -4,8 +4,8 @@ import random
 
 def get_win_probability(main_game:Game):
     win_count=0
-    game_count=0
-    for i in range(100):
+    SIMULATION_COUNT=100
+    for i in range(SIMULATION_COUNT):
         game = main_game.get_simulation_copy()
         game.init_game()
         game.run()
@@ -16,12 +16,11 @@ def get_win_probability(main_game:Game):
         elif game.is_player_win():
             win_count+=1
             pass
-        game_count+=1
         # print(game.player,game.dealer,game.is_player_win())
         pass
-    # print(win_count,game_count)
+    # print(win_count,SIMULATION_COUNT)
     # exit()
-    return win_count/game_count
+    return win_count/SIMULATION_COUNT
 def gamble_amount(money,game,turn):
     win_rate=get_win_probability(game)
     amount = money*kelly_criterion(win_rate,1)
@@ -29,14 +28,14 @@ def gamble_amount(money,game,turn):
         amount = 1
     if amount>100:
         amount = 100
-    # if turn%1000==0:
-    #     print("money",money,"amount",amount,"win_rate",win_rate,"turn",turn)
+    if turn%1==0:
+        print("money",money,"amount",amount,"win_rate",win_rate,"turn",turn)
     # exit()
     return amount
 money=1000
 trial=0
 average_money=0
-while trial<10:
+while trial<1:
     money=1000
     turn=0
     game=Game()
